@@ -8,18 +8,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
+@Getter @Setter //Getters y Setters de la libreria Lombok para evitar el código repetitivo
 public class Todo {
 
+    // Se crean las variables para los datos necesarios con su respectivo encapsulamiento
     @Id
-    @GeneratedValue
-    @Getter @Setter
+    @GeneratedValue  //Genera automáticamente el valor del Id
     private Long id;
-
-    @Getter @Setter
     private String name;
-
-    @Getter @Setter
     private boolean isCompleted;
-
-
 }

@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class TodoService {
 
+    // La clase servicio controla los métodos de la clase repository
+
     @Autowired
     private TodoRepository repository;
 
