@@ -64,16 +64,29 @@ const Form = () => {
       });
   }
 
+  <div>
+    <h1>TO-DO List</h1>
+    <hr />
+  </div>
   return <form ref={formRef}>
-    <input type="text" name="name" defaultValue={item.name} onChange={(event) => {
-      setState({ ...state, name: event.target.value })
-    }}></input>
-
-    {item.id && <button onClick={onEdit}>Actualizar</button>}
-    {!item.id && <button onClick={onAdd}>Agregar</button>}
-
+    <div className="container">
+      <div className="row">
+        <div className="col">
+          <div className="container">
+            <div className="form-group">
+              <input type="text" name="name" defaultValue={item.name} onChange={(event) => {
+                setState({ ...state, name: event.target.value })
+              }}></input>
+            </div>
+            {item.id && <button onClick={onEdit}>Actualizar</button>}
+            {!item.id && <button onClick={onAdd}>Agregar</button>}
+          </div>
+        </div>
+      </div>
+    </div>
   </form>
 }
+
 const List = () => {
   const { dispatch, state } = useContext(Store);
 
@@ -97,11 +110,11 @@ const List = () => {
   const onEdit = (todo) => {
     dispatch({ type: "edit-item", item: todo })
   };
-  return <div className = "container mt-10">
-    <table className = "table table-striped table-dark">
+  return <div className="container mt-10">
+    <table className="table table-striped table-dark">
       <thead>
         <tr>
-          <td className = "table-primary">ID</td>
+          <td className="table-primary">ID</td>
           <td>Nombre</td>
           <td>¡¿Está completado?</td>
         </tr>
@@ -112,8 +125,8 @@ const List = () => {
             <td>{todo.id}</td>
             <td>{todo.name}</td>
             <td>{todo.isCompleted === true ? "SI" : "NO"}</td>
-            <td><button onClick={() => onDelete(todo.id)} className ="btn btn-primary">Eliminar</button></td>
-            <td><button onClick={() => onEdit(todo)} className ="btn btn-primary">Editar</button></td>
+            <td><button onClick={() => onDelete(todo.id)} className="btn btn-primary">Eliminar</button></td>
+            <td><button onClick={() => onEdit(todo)} className="btn btn-primary">Editar</button></td>
           </tr>
         })}
       </tbody>
