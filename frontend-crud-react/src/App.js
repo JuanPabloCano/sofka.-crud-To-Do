@@ -1,9 +1,8 @@
 import React, { createContext, useContext, useReducer, useEffect, useRef, useState } from 'react';
-import { container, row, col } from 'reactstrap';
-import { table, button} from 'reactstrap';
 
 const HOST_API = "http://localhost:8080/api";
 
+// Se crea el estado inicial
 const initialState = {
   list: [],
   item: {}
@@ -11,13 +10,14 @@ const initialState = {
 
 const Store = createContext(initialState)
 
+// La clase form captura los eventos y los manda a la base de datos
 const Form = () => {
   const formRef = useRef(null);
   const { dispatch, state: { item } } = useContext(Store);
   const [state, setState] = useState(item);
 
   const onAdd = (event) => {
-    event.preventDefault();
+    event.preventDefault(); // Método para prevenir eventos default
 
     const request = {
       name: state.name,
@@ -63,12 +63,11 @@ const Form = () => {
         formRef.current.reset();
       });
   }
-
   <div>
     <h1>TO-DO List</h1>
     <hr />
-  </div>
-  return <form ref={formRef}>
+  </div>  //Formulario para agregar y actualizar
+  return <form ref={formRef}> 
     <div className="container">
       <div className="row">
         <div className="col">
@@ -110,6 +109,8 @@ const List = () => {
   const onEdit = (todo) => {
     dispatch({ type: "edit-item", item: todo })
   };
+
+  // Formulario para el manejo de los datos
   return <div className="container mt-10">
     <table className="table table-striped table-dark">
       <thead>
@@ -124,7 +125,7 @@ const List = () => {
           return <tr key={todo.id}>
             <td>{todo.id}</td>
             <td>{todo.name}</td>
-            <td>{todo.isCompleted === true ? "SI" : "NO"}</td>
+            <td><input className="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"></input></td>
             <td><button onClick={() => onDelete(todo.id)} className="btn btn-primary">Eliminar</button></td>
             <td><button onClick={() => onEdit(todo)} className="btn btn-primary">Editar</button></td>
           </tr>
@@ -150,6 +151,7 @@ function reducer(state, action) {
       const listUpdate = state.list.filter((item) => {
         return item.id !== action.id;
       });
+      return { ...state, list: listUpdate, item: {} }
 
     case 'update-list':
       return { ...state, list: action.list }
@@ -161,7 +163,6 @@ function reducer(state, action) {
       const newList = state.list;
       newList.push(action.item);
       return { ...state, list: newList }
-
     default:
       return state;
   }
